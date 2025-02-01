@@ -5,7 +5,6 @@ export async function updateWallet(
     address: string,
     signature: string
 ) {
-    console.log("signature", signature);
     const result = await fetch(`${process.env.BOT_SERVER}/user`, {
         method: "POST",
         headers: {
