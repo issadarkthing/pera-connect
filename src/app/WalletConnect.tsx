@@ -5,6 +5,7 @@ import { disconnectWallet } from "./actions/disconnectWallet";
 
 const peraWallet = new PeraWalletConnect({
     chainId: 416001,
+    singleAccount: true,
 });
 
 export default function WalletConnect({ id }: { id: string }) {
