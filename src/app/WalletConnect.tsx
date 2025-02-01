@@ -12,16 +12,24 @@ export default function WalletConnect({ id }: { id: string }) {
     const [isConnected, setIsConnected] = useState(false);
 
     const disconnect = async () => {
-        await peraWallet.disconnect();
-        setAccountAddress("");
-        setIsConnected(false);
-        await disconnectWallet(id);
+        try {
+            await peraWallet.disconnect();
+            setAccountAddress("");
+            setIsConnected(false);
+            await disconnectWallet(id);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const connect = async (address: string) => {
-        setAccountAddress(address);
-        setIsConnected(true);
-        await updateWallet(id, address);
+        try {
+            setAccountAddress(address);
+            setIsConnected(true);
+            await updateWallet(id, address);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     useEffect(() => {
@@ -45,7 +53,7 @@ export default function WalletConnect({ id }: { id: string }) {
             const accounts = await peraWallet.connect();
             await connect(accounts[0]);
         } catch (err) {
-            console.error(err);
+            console.log(err);
         }
     };
 
