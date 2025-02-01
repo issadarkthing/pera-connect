@@ -1,6 +1,14 @@
 "use server";
-import { wallets } from "@/app/utils";
 
-export async function updateWallet(userId: string, walletAddress: string) {
-    wallets.set(userId, walletAddress);
+export async function updateWallet(id: string, address: string) {
+    const result = await fetch(`${process.env.BOT_SERVER}/user`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id, address }),
+    });
+
+    const data = await result.text();
+    console.log(data);
 }
