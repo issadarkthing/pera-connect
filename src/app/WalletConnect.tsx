@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { updateWallet } from "./actions/updateWallet";
 import { PeraWalletConnect } from "@perawallet/connect";
+import { disconnectWallet } from "./actions/disconnectWallet";
 
 const peraWallet = new PeraWalletConnect({
     chainId: 416001,
@@ -14,6 +15,7 @@ export default function WalletConnect({ id }: { id: string }) {
         await peraWallet.disconnect();
         setAccountAddress("");
         setIsConnected(false);
+        await disconnectWallet(id);
     };
 
     const connect = async (address: string) => {
