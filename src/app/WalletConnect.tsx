@@ -27,7 +27,15 @@ export default function WalletConnect({ id }: { id: string }) {
         try {
             setAccountAddress(address);
             setIsConnected(true);
-            await updateWallet(id, address);
+            const encoder = new TextEncoder();
+            const data = encoder.encode(JSON.stringify({ id, address }));
+            const signedBytes = await peraWallet.signData(
+                [{ data, message: "authentication" }],
+                address
+            );
+
+            const signature = uint8ArrayToBase64(signedBytes[0]);
+            await updateWallet(id, address, signature);
         } catch (err) {
             console.log(err);
         }
@@ -66,4 +74,14 @@ export default function WalletConnect({ id }: { id: string }) {
             </button>
         </>
     );
+}
+
+function uint8ArrayToBase64(uint8Array: Uint8Array) {
+    // Create a binary string from the Uint8Array
+    let binary = "";
+    for (let i = 0; i < uint8Array.length; i++) {
+        binary += String.fromCharCode(uint8Array[i]);
+    }
+    // Encode the binary string in Base64
+    return window.btoa(binary);
 }
