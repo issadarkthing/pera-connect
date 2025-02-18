@@ -10,7 +10,6 @@ const peraWallet = new PeraWalletConnect({
 });
 
 export default function WalletConnect({ id }: { id: string }) {
-    const [accountAddress, setAccountAddress] = useState("");
     const [isConnected, setIsConnected] = useState(false);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
@@ -18,7 +17,6 @@ export default function WalletConnect({ id }: { id: string }) {
     const disconnect = async () => {
         try {
             await peraWallet.disconnect();
-            setAccountAddress("");
             setIsConnected(false);
             await disconnectWallet(id);
             setMessage("Disconnected!");
@@ -31,7 +29,6 @@ export default function WalletConnect({ id }: { id: string }) {
     const connect = async (address: string) => {
         try {
             setLoading(true);
-            setAccountAddress(address);
             setIsConnected(true);
             setMessage("Signing data...");
 
