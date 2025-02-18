@@ -56,11 +56,9 @@ export default function WalletConnect({ id }: { id: string }) {
             peraWallet.connector?.on("disconnect", disconnect);
 
             if (accounts.length > 0) {
-                setAccountAddress(accounts[0]);
                 setIsConnected(true);
                 setMessage("Connected!");
             } else {
-                setAccountAddress("");
                 setIsConnected(false);
                 setMessage("");
             }
